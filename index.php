@@ -1,27 +1,59 @@
-<!DOCTYPE html>
+<?php
+require_once('bootstrap.php');
+// User::checkLogin();
+if (isset($_SESSION['user'])) {
+    //logged in user
+    //echo "😎";
+} else {
+    //no logged in user
+    header('Location: login.php');
+}
+$myTodos = Todo::getTodos();
+$CheckedTodos = Todo::getCheckedTodos();
+$UncheckedTodos = Todo::getUncheckedTodos();
+?><!doctype html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <?php include_once("includes/head.inc.php"); ?>
+
 </head>
+
 <body>
-    <div class="large-container">
-<header>
-    <a href="create.php" class="first">Create</a>
-    <h1>TODO APP</h1>
-    <a href="edit.php" class="second">Edit</a>
-</header>
-    <span>Not Done</span>
-    <a href="#"><li class="todo"><img src="images/checkF.png" alt=""><h3>Pay Rent</h3><p class="urgent">Due: Today @ 12:00</p></li></a>
-    <a href="#"><li class="todo"><img src="images/checkF.png" alt=""><h3>Call Dad</h3><p></p></li></a>
-    <a href="#"><li class="todo"><img src="images/checkF.png" alt=""><h3>Go To Store</h3><p></p></li></a>
-    <span>Done</span>
-    <a href="#"><li class="done"><img src="images/checkUF.png" alt=""><h3>Work on Class</h3><p></p></li></a>
-    <a href="#"><li class="done"><img src="images/checkUF.png" alt=""><h3>Finish Assignment</h3><p></p></li></a>
-    <a href="#"><li class="done"><img src="images/checkUF.png" alt=""><h3>French Studies</h3><p></p></li></a>
+    <div id="canvas">
+
+    <header>
+        <?php include_once("includes/nav.inc.php"); ?>
+    </header>
+
+    <section id="main">
+
+    <article class="todo">
+    <h2>To do</h2>
+
+    <ul class="itemlist todo">
+        <?php foreach($UncheckedTodos as $t): ?>
+            <li><a href="todo.php?todo_id=<?php echo $t['id'] ?>"><span class="icon"><i class=" fas fa-pen-square"></i></span><h3><?php echo $t['title'];?></h3> <p class="urgent">Due: <?php echo $t['date'] ?></p></a></li>
+        <?php endforeach; ?>
+    </ul>
+
+
+    </article>
+
+    <article class="done">
+    <h2>Done</h2>
+
+    <ul class="itemlist done">
+        <?php foreach($CheckedTodos as $t): ?>
+            <li><a href="todo.php?todo_id=<?php echo $t['id'] ?>"><span class="icon"><i class=" fas fa-pen-square"></i></span><h3><?php echo $t['title'];?></h3> <p class="urgent">Due: <?php echo $t['date'] ?></p></a></li>
+        <?php endforeach; ?>
+    </ul>
+    
+    </article>
+
+    </section>
+
+
     </div>
 </body>
 </html>

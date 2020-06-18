@@ -15,9 +15,9 @@
    <div class="menu">
     <ul>
       <li><a href="./create.php">Create todo</a></li>
-      <li><a href="./createList.php"><li>Create list</a></li>
-      <li><a href="./lists.php"><li>lists</a></li>
-      <li><a href="./logout.php"><li class="menu__logout">Logout</a></li>
+      <li><a href="./createList.php">Create list</a></li>
+      <li><a href="./lists.php">Lists</a></li>
+      <li class="menu__logout"><a href="./logout.php">Logout</a></li>
     </ul>
 </div> 
 

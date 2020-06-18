@@ -154,6 +154,18 @@
                 }
             }
 
+        public function deleteTodo() {
+            try {
+                $conn = Db::getInstance();
+                $statement = $conn->prepare('delete from todos where id= :todo_id');
+                $statement->bindParam('todo_id', $this->todoId);
+                $statement->execute();       
+        } catch ( Throwable $t ) {
+                return false;
+    
+            }
+        }
+
         public static function getTodos()
         {
             try {

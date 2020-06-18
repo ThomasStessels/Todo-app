@@ -1,37 +1,77 @@
-<!DOCTYPE html>
+<?php
+    require_once("bootstrap.php");
+
+    if (!empty($_POST)) {
+        $todo = new Todo();
+
+        // get user_id
+        $userId = $_SESSION['user'][0];
+
+        //set info
+        $todo->setTitle($_POST['title']);
+        $todo->setTime($_POST['time']);
+        $todo->setListId($_POST['lists']);
+        $rawdate = htmlentities($_POST['date']);
+        $date = date('Y-m-d', strtotime($rawdate));
+        $todo->setDate($date);
+
+        // info about todo to db and get id from todo
+       $todoId = $todo->registerTodo();
+
+        //go to next page
+        header("Location: index.php");
+    }
+        else {
+            
+        }
+        $Mylists = MyLists::getLists();
+    
+?><!doctype html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <?php include_once("includes/head.inc.php"); ?>
+
 </head>
+
 <body>
-    <div class="large-container">
-<header>
-    <a href="#" class="close"> &#10006 </a>
-    <h1>NEW TODO</h1>
-    <a href="index.php" class="second">Save</a>
-</header>
-    <form action="">
-    <span></span>
-    <input type="text" id="todo" name="todo" placeholder="Todo Name" class="field">
-    <span></span>
+    <div id="canvas">
+
+    <header>
+    <?php include_once("includes/create.inc.php"); ?>
+    </header>
+
+    <section id="main">
+
+    <article class="create">
+    <h2>New To do</h2>
+
+    <form action="" method="post">
+    <input type="text" id="title" name="title" placeholder="Todo Name" class="field" required>
     <div class="small-container">
-        <label class="due field" for="">Due Date</label>
-        <label class="switch field">
-            <input type="checkbox">
-            <span class="slider round"></span>
-        </label>  
-    </div>  
+        <label class="due field" for="">Estimated Time</label>
+        <input type="time" class="field" name="time" min="00:00" max="18:00" required>
+    </div> 
     <div class="small-container">
         <label class="due field" for="">Due By</label>
+        <input type="date" class="field date" name="date">
+    </div> 
+    <div class="small-container">
+        <label class="due field" for="">Add to list</label>
+        <select id="lists" name="lists">
+            <?php foreach($Mylists as $l): ?>
+                <option value="<?php echo $l['id'];?>"><?php echo $l['title'];?></option>
+            <?php endforeach; ?>
+    </select>
     </div>
-    <div class="small-container-date">
-        <input type="date" name="date">
-    </div>
+    <input type="submit" value="Create" class="btn save">
     </form>
+
+    </article>
+
+    </section>
+
+
     </div>
 </body>
 </html>

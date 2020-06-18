@@ -57,7 +57,8 @@
         <label class="due field" for="">Added to list</label>
         <input type="text" id="list" name="list" placeholder="<?php echo $myLists['title']; ?>" class="field" >
     </div>
-    <input type="submit" value="Update" class="btn save">
+    <input type="submit" value="Update" id="update" data-id="<?php echo $todos['todoId']; ?>" class="btn save">
+    <input type="submit" value="Delete" id="delete" data-id="<?php echo $todos['todoId']; ?>" class="btn delete">
     </form>
 
     </article>
@@ -66,6 +67,13 @@
 
 
     </div>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+        <script language="JavaScript" type="text/javascript" src="js/delete_todo.js"></script>
+
+
     <script type="text/javascript">
     $(document).ready(function(){
         $('input[type="checkbox"]').click(function(){
@@ -76,7 +84,7 @@
                     type: 'POST',
                     data: { todoId: todoId }
                 });
-            }
+        }
             else if($(this).prop("checked") == false){
                 $.ajax({
                     url: 'ajax/uncheck_todo.php',
@@ -86,6 +94,17 @@
             }
         });
     });
+    $(document).ready(function(){
+        $('#update').click(function(){
+            var todoId = $(this).data("todoId");
+                $.ajax({
+                    url: 'ajax/update_todo.php',
+                    type: 'POST',
+                    data: { todoId: todoId }
+                });
+        });
+    });
+  
 </script>
 </body>
 </html>

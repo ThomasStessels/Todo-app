@@ -40,6 +40,7 @@ if(!empty($_POST)){
         <h1>ToDo App</h1>
         <div class="Login">
             <form action="" method="post">
+                <h2>Log in to your account</h2>
                 <?php if( isset($error) ): ?>
                     <div class="form__error">
                         <p>
